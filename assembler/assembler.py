@@ -1,5 +1,5 @@
 from fileinput import input
-from sys import stdout, stderr
+from sys import stdout
 
 
 class Assembler:
@@ -19,8 +19,7 @@ class Assembler:
     need_replacement = {}
 
     def error(self, mess):
-        print("Error: {0}, line: {1}".format(mess, self.current_line), file=stderr)
-        exit()
+        exit("Error: {0}, line: {1}".format(mess, self.current_line))
 
     def out(self, b):
         self.bytes_ += b
@@ -62,12 +61,12 @@ class Assembler:
                     else:
                         self.error("Unknown command: " + commds[0])
                 elif len(commds) == 2:
-                    indirect = commds[1].find("[") >= 0
                     if commds[0] in self.dint:
+                        indirect = commds[1].find("[") >= 0
                         if indirect:
-                            self.out(self.dint[commds[0]][0])
-                        else:
                             self.out(self.dint[commds[0]][1])
+                        else:
+                            self.out(self.dint[commds[0]][0])
                             self.print_num(commds[1])
                     elif commds[0] in self.djump:
                         self.out(self.djump[commds[0]])
