@@ -67,7 +67,7 @@ class Assembler:
                             self.out(self.dint[commds[0]][1])
                         else:
                             self.out(self.dint[commds[0]][0])
-                            self.print_num(commds[1])
+                        self.print_num(commds[1])
                     elif commds[0] in self.djump:
                         self.out(self.djump[commds[0]])
                         lab = commds[1]
